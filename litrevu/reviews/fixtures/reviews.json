@@ -1,0 +1,15 @@
+[
+{
+  "model": "reviews.review",
+  "pk": 1,
+  "fields": {
+    "ticket": 1,
+    "user": 1,
+    "rating": 2,
+    "headline": "genial !!!!",
+    "body": "j'ai adoré la sensibilité de l'auteur .....",
+    "time_created": "2025-06-26T03:01:11.292Z"
+  }
+}
+]
+

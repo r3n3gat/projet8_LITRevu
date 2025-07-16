@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Abonnements — LITReview{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h2>Abonnements</h2>
+
+  <form method="post" action="{% url 'reviews:follow_add' %}" class="follow-search">
+    {% csrf_token %}
+    <input
+      type="text"
+      name="username"
+      placeholder="Nom d’utilisateur"
+      value="{{ form.username.value|default_if_none:'' }}"
+      class="form-search-input"
+      required>
+    <button type="submit" class="btn btn--primary">Ajouter</button>
+    {% if form.username.errors %}
+      <div class="form-error">{{ form.username.errors.0 }}</div>
+    {% endif %}
+  </form>
+
+  <h3>Abonnements</h3>
+  {% if follows %}
+    <ul class="follow-list">
+      {% for f in follows %}
+        <li>
+          <span>{{ f.followed_user.username }}</span>
+          <form method="post"
+                action="{% url 'reviews:follow_delete' f.pk %}"
+                class="inline-form">
+            {% csrf_token %}
+            <button type="submit" class="btn btn--small">Désabonner</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Vous ne suivez personne.</p>
+  {% endif %}
+
+  <h3>Abonnés</h3>
+  {% if followers %}
+    <ul class="follow-list">
+      {% for f in followers %}
+        <li>{{ f.user.username }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Vous n’avez aucun abonné.</p>
+  {% endif %}
+
+  {% if suggestions %}
+    <h3>Suggestions</h3>
+    <ul class="follow-list suggestions-list">
+      {% for u in suggestions %}
+        <li>
+          <span>{{ u.username }}</span>
+          <form method="post"
+                action="{% url 'reviews:follow_add' %}"
+                class="inline-form">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{ u.username }}">
+            <button type="submit" class="btn btn--primary btn--small">Suivre</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

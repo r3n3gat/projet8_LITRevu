@@ -1,0 +1,67 @@
+{# templates/reviews/review_answer_form.html #}
+{% extends "base.html" %}
+
+{% block title %}Répondre à une demande — LITReview{% endblock %}
+
+{% block content %}
+<div class="container" role="main" aria-labelledby="answer-title">
+  <h2 id="answer-title">Créer une critique pour : {{ ticket.title }}</h2>
+
+  <div class="card snippet-ticket" style="margin-bottom:2rem;">
+    <div class="card__header">
+      <span class="card__author">{{ ticket.user.username }}</span>
+      <span class="card__timestamp">{{ ticket.created_at|date:"H:i, d M Y" }}</span>
+    </div>
+    <div class="card__body">
+      <p>{{ ticket.description }}</p>
+      {% if ticket.cover_image %}
+        <img src="{{ ticket.cover_image.url }}"
+             alt="Couverture de {{ ticket.title }}"
+             class="snippet-ticket__image">
+      {% else %}
+        <img src="https://picsum.photos/seed/ticket{{ ticket.pk }}/200/300"
+             alt="Image aléatoire pour {{ ticket.title }}"
+             class="snippet-ticket__image">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="form-page" style="padding:2rem;">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <fieldset>
+        <legend>Votre critique</legend>
+
+        <div class="form-group">
+          <label>Note :</label>
+          {{ form.rating }}
+          {% for err in form.rating.errors %}
+            <p class="form-error">{{ err }}</p>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.headline.id_for_label }}">Titre :</label>
+          {{ form.headline }}
+          {% for err in form.headline.errors %}
+            <p class="form-error">{{ err }}</p>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.body.id_for_label }}">Commentaire :</label>
+          {{ form.body }}
+          {% for err in form.body.errors %}
+            <p class="form-error">{{ err }}</p>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <div class="form-actions" style="margin-top:1.5rem;">
+        <button type="submit" class="btn btn--primary">Envoyer</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

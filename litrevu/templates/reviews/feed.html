@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Flux — LITReview{% endblock %}
+{% block content %}
+
+  <div class="feed-actions">
+    <a href="{% url 'reviews:ticket_add' %}" class="btn btn--primary">
+      Demander une critique
+    </a>
+    <a href="{% url 'reviews:review_free_create' %}" class="btn btn--primary">
+      Créer une critique
+    </a>
+  </div>
+
+  {% for entry in entries %}
+    {% if entry.content_type == 'ticket' %}
+      {% include "reviews/_snippet_ticket.html" with ticket=entry %}
+    {% else %}
+      {% include "reviews/_snippet_review.html" with review=entry %}
+    {% endif %}
+  {% empty %}
+    <p>Aucun contenu à afficher pour le moment.</p>
+  {% endfor %}
+
+{% endblock %}

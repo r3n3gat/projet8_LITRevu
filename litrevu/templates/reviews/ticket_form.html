@@ -1,0 +1,53 @@
+{# templates/reviews/ticket_form.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Créer un ticket — LITRevu{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+  <h2 class="centered">Créer un ticket</h2>
+  <form method="post" enctype="multipart/form-data" class="form-page">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <ul class="errorlist">
+        {% for err in form.non_field_errors %}
+          <li>{{ err }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {% for err in form.title.errors %}
+        <p class="form-error">{{ err }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+      {% for err in form.description.errors %}
+        <p class="form-error">{{ err }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.cover_image.label_tag }}
+      <label class="btn">
+        Télécharger fichier
+        {{ form.cover_image }}
+      </label>
+      {% for err in form.cover_image.errors %}
+        <p class="form-error">{{ err }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-actions" style="justify-content: flex-end;">
+      <button type="submit" class="btn btn--primary">Envoyer</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

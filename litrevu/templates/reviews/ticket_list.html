@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Vos posts — LITReview{% endblock %}
+
+{% block content %}
+  <h2>Vos tickets</h2>
+
+  {% if tickets %}
+    <a href="{% url 'reviews:ticket_add' %}" class="btn btn--primary">Ajouter un ticket</a>
+    {% for ticket in tickets %}
+      {% include "reviews/_snippet_ticket.html" with ticket=ticket %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p class="empty-state__text">
+        Vous n’avez aucun ticket pour le moment.
+      </p>
+      <a href="{% url 'reviews:ticket_add' %}"
+         class="btn btn--primary empty-state__btn">
+        Ajouter un ticket
+      </a>
+    </div>
+  {% endif %}
+
+  <h2>Vos critiques</h2>
+
+  {% if reviews %}
+    {% for review in reviews %}
+      {% include "reviews/_snippet_review.html" with review=review %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p class="empty-state__text">
+        Vous n’avez aucune critique pour le moment.
+      </p>
+      <a href="{% url 'reviews:review_free_create' %}"
+         class="btn btn--primary empty-state__btn">
+        Écrire une critique
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}

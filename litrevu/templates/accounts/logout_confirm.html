@@ -1,0 +1,18 @@
+{# templates/accounts/logout_confirm.html #}
+{% extends "base.html" %}
+{% block title %}Se déconnecter — LITReview{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h2>Se déconnecter</h2>
+  <p>Voulez-vous vraiment vous déconnecter ?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn--primary">
+      Oui, me déconnecter
+    </button>
+    <a href="{% url 'accounts:profile' %}" class="btn">
+      Non, revenir à mon profil
+    </a>
+  </form>
+</div>
+{% endblock %}

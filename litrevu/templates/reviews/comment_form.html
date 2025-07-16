@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Ajouter un commentaire — LITReview{% endblock %}
+
+{% block content %}
+<div class="form-page container" role="main" aria-labelledby="comment-form-title">
+  <h2 id="comment-form-title">Ajouter un commentaire</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group">
+      <label for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
+      {{ form.body }}
+      {% for err in form.body.errors %}
+        <p class="form-error" role="alert">{{ err }}</p>
+      {% endfor %}
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn--primary">Envoyer</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

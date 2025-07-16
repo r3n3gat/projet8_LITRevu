@@ -1,0 +1,41 @@
+{# templates/core/home.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accueil — LITReview{% endblock %}
+
+{% block content %}
+<div class="home-container container" role="main" aria-label="Page d’accueil">
+  <!-- Panel Inscription -->
+  <section class="home-panel signup-panel" aria-labelledby="signup-title">
+    <h2 id="signup-title">Inscrivez-vous maintenant</h2>
+    <p>Rejoignez notre communauté pour partager vos critiques de livres et d’articles.</p>
+    <a href="{% url 'accounts:signup' %}" class="btn btn--primary">S’inscrire</a>
+  </section>
+
+  <!-- Panel Connexion -->
+  <section class="home-panel login-panel" aria-labelledby="login-title">
+    <h2 id="login-title">Connectez-vous</h2>
+    <form method="post" action="{% url 'core:home' %}" novalidate>
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Nom d’utilisateur</label>
+        {{ form.username }}
+        {% for err in form.username.errors %}
+          <p class="form-error" role="alert">{{ err }}</p>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+        {{ form.password }}
+        {% for err in form.password.errors %}
+          <p class="form-error" role="alert">{{ err }}</p>
+        {% endfor %}
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn--primary">Se connecter</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Supprimer la critique — LITRevu{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <h2>Supprimer la critique</h2>
+  <p>Voulez-vous vraiment supprimer votre critique intitulée : « {{ review.headline }} » ?</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-actions">
+      <button type="submit" class="btn btn--primary">Oui, supprimer</button>
+      <a href="{% url 'reviews:review_detail' review.pk %}" class="btn">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

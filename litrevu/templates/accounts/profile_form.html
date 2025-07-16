@@ -1,0 +1,32 @@
+{# templates/accounts/profile_form.html #}
+{% extends "base.html" %}
+{% block title %}Modifier mon profil — LITReview{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h2>Modifier mon profil</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="form-group">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class="form-group">
+      {{ form.bio.label_tag }}
+      {{ form.bio }}
+      {{ form.bio.errors }}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn--primary">Enregistrer</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

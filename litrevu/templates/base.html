@@ -1,0 +1,59 @@
+{# templates/base.html #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}LITReview{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar__container container">
+      {# Logo centré, non-cliquable #}
+      <span class="navbar__logo">LITReview</span>
+
+      {# Liens de navigation alignés à droite #}
+      <div class="navbar__links">
+        <a href="{% url 'reviews:feed' %}"        class="navbar__link">Flux</a>
+        <a href="{% url 'reviews:ticket_list' %}" class="navbar__link">Vos posts</a>
+        <a href="{% url 'reviews:follow_list' %}" class="navbar__link">Abonnements</a>
+
+        {% if user.is_authenticated %}
+          {# Le seul lien « utilisateur » pointe vers le profil #}
+          <a href="{% url 'accounts:profile' %}"
+             class="navbar__link navbar__link--user">
+            <svg class="navbar__icon" xmlns="http://www.w3.org/2000/svg"
+                 width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 100-6 3 3 0 000 6z"/>
+              <path fill-rule="evenodd"
+                    d="M14 14s-1-4-6-4-6 4-6 4 0 1 1 1h10c1 0 1-1 1-1z"/>
+            </svg>
+            {{ user.username }}
+          </a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}"
+             class="navbar__link navbar__link--user">
+            <svg class="navbar__icon" xmlns="http://www.w3.org/2000/svg"
+                 width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 100-6 3 3 0 000 6z"/>
+              <path fill-rule="evenodd"
+                    d="M14 14s-1-4-6-4-6 4-6 4 0 1 1 1h10c1 0 1-1 1-1z"/>
+            </svg>
+            Connexion
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 LITReview</p>
+  </footer>
+</body>
+</html>

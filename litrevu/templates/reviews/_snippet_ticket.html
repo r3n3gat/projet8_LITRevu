@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card__header">
+    <span class="card__author">{{ ticket.user.username }}</span>
+    <time class="card__timestamp"
+          datetime="{{ ticket.created_at|date:'c' }}">
+      {{ ticket.created_at|date:"H:i, d M Y" }}
+    </time>
+  </div>
+
+  <div class="card__body">
+    {% if ticket.cover_image %}
+      <img src="{{ ticket.cover_image.url }}"
+           alt="Image pour {{ ticket.title }}"
+           class="snippet-ticket__image">
+    {% else %}
+      <img src="https://picsum.photos/seed/ticket{{ ticket.pk }}/200/200"
+           alt="Image aléatoire pour {{ ticket.title }}"
+           class="snippet-ticket__image">
+    {% endif %}
+
+    <h3 class="card__title">{{ ticket.title }}</h3>
+    <p>{{ ticket.description }}</p>
+  </div>
+
+  <div class="card__actions">
+    {# L’utilisateur propriétaire : Modifier + Supprimer #}
+    {% if ticket.user == user %}
+      <a href="{% url 'reviews:ticket_edit' ticket.pk %}"
+         class="btn btn--small btn--primary">
+        Modifier
+      </a>
+      <form method="post"
+            action="{% url 'reviews:ticket_delete' ticket.pk %}"
+            class="inline-form">
+        {% csrf_token %}
+        <button type="submit"
+                class="btn btn--small btn--secondary">
+          Supprimer
+        </button>
+      </form>
+
+    {# Pour les autres : proposer une critique si pas déjà faite #}
+    {% elif user.is_authenticated and not ticket.reviews.exists %}
+      <a href="{% url 'reviews:review_create' ticket.pk %}"
+         class="btn btn--primary">
+        Demander une critique
+      </a>
+    {% endif %}
+  </div>
+</div>

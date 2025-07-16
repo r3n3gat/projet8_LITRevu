@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Mon profil — LITReview{% endblock %}
+{% block content %}
+
+<div class="form-page container">
+
+  <h2>Mon profil</h2>
+
+  {# --- Infos utilisateur en « barres » --- #}
+  <ul class="follow-list profile-list">
+    <li>
+      <span>Nom d’utilisateur :</span>
+      <span>{{ user.username }}</span>
+    </li>
+    <li>
+      <span>Email :</span>
+      <span>{{ user.email }}</span>
+    </li>
+    <li>
+      <span>Bio :</span>
+      <span>{{ user.bio|default:"(Pas encore de bio)" }}</span>
+    </li>
+  </ul>
+
+  <div class="form-actions">
+    <a href="{% url 'accounts:profile_edit' %}"
+       class="btn btn--primary">
+      Modifier mon profil
+    </a>
+    <form method="post"
+          action="{% url 'accounts:logout' %}"
+          class="inline-form"
+          style="display:inline-block; margin-left:1rem;">
+      {% csrf_token %}
+      <button type="submit" class="btn">
+        Se déconnecter
+      </button>
+    </form>
+  </div>
+
+  {# --- Mes tickets --- #}
+  <h3>Mes tickets</h3>
+  {% if tickets %}
+    {% for ticket in tickets %}
+      {% include "reviews/_snippet_ticket.html" with ticket=ticket %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p class="empty-state__text">
+        Vous n’avez pas encore posté de ticket.
+      </p>
+      <a href="{% url 'reviews:ticket_add' %}"
+         class="btn btn--primary empty-state__btn">
+        Ajouter un ticket
+      </a>
+    </div>
+  {% endif %}
+
+  {# --- Mes critiques --- #}
+  <h3>Mes critiques</h3>
+  {% if reviews %}
+    {% for review in reviews %}
+      {% include "reviews/_snippet_review.html" with review=review %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p class="empty-state__text">
+        Vous n’avez pas encore posté de critique.
+      </p>
+      <a href="{% url 'reviews:review_free_create' %}"
+         class="btn btn--primary empty-state__btn">
+        Écrire une critique
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

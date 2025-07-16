@@ -1,0 +1,32 @@
+{# templates/reviews/_snippet_review.html #}
+<div class="card">
+  <div class="card__header">
+    <span class="card__author">{{ review.user.username }}</span>
+    <time class="card__timestamp"
+          datetime="{{ review.time_created|date:'c' }}">
+      {{ review.time_created|date:"H:i, d M Y" }}
+    </time>
+  </div>
+  <div class="card__body">
+    {% if review.ticket.cover_image %}
+      <img src="{{ review.ticket.cover_image.url }}"
+           alt="Image pour {{ review.ticket.title }}"
+           class="snippet-review__image">
+    {% else %}
+      <img src="https://picsum.photos/seed/ticket{{ review.ticket.pk }}/200/200"
+           alt="Image aléatoire pour {{ review.ticket.title }}"
+           class="snippet-review__image">
+    {% endif %}
+
+    <h3 class="card__title">
+      {{ review.headline }} — {{ review.rating }} ★
+    </h3>
+    <p>{{ review.body }}</p>
+  </div>
+  <div class="card__actions">
+    <a href="{% url 'reviews:review_detail' review.pk %}"
+       class="btn btn--primary">
+      Voir la critique
+    </a>
+  </div>
+</div>

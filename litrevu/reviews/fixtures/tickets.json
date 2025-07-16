@@ -1,0 +1,13 @@
+[
+{
+  "model": "reviews.ticket",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "title": "Mon premier billet",
+    "description": "un super livre .... !",
+    "created_at": "2025-06-26T03:00:36.053Z"
+  }
+}
+]
+

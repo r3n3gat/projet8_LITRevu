@@ -1,0 +1,49 @@
+# Virtualenv
+env/
+venv/
+ENV/
+
+# Compiled Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database
+/db.sqlite3
+
+# Logs
+*.log
+
+# Media and build artifacts
+/media/
+/staticfiles/
+/npm-debug.log*
+
+# Local settings and secrets
+local_settings.py
+.env
+*.env
+
+# IDEs and editors
+.idea/
+/.vscode/
+/*.sublime-project
+/*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Packaging
+*.egg-info/
+dist/
+build/
+coverage/
+
+# Others
+pip-log.txt
+docs.zip
+litrevu.zip
+presentation_litrevu.pdf
+presentation_litrevu.pptx
+.flake8

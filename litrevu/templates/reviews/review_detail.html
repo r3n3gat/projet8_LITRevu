@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Critique — LITReview{% endblock %}
+
+{% block content %}
+<div class="container" role="main">
+  <div class="card review-detail-card">
+    <div class="card__header">
+      <span class="card__author">{{ review.user.username }} a publié une critique</span>
+      <time class="card__timestamp" datetime="{{ review.time_created|date:'c' }}">
+        {{ review.time_created|date:"H:i, d M Y" }}
+      </time>
+    </div>
+    <div class="card__body">
+      <h3 class="card__title">{{ review.headline }} — {{ review.rating }} ★</h3>
+      <p>{{ review.body }}</p>
+      <div class="nested-ticket">
+        <h4>Ticket — {{ review.ticket.user.username }}</h4>
+        <p>{{ review.ticket.title }}</p>
+        {% if review.ticket.cover_image %}
+          <img src="{{ review.ticket.cover_image.url }}"
+               alt="Image pour {{ review.ticket.title }}"
+               class="nested-ticket__image">
+        {% else %}
+          <img src="https://picsum.photos/seed/ticket{{ review.ticket.pk }}/200/300"
+               alt="Image aléatoire pour {{ review.ticket.title }}"
+               class="nested-ticket__image">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="comments-title">
+    <h2 id="comments-title">Commentaires</h2>
+
+    {% for comment in review.comments.all %}
+      <div class="card comment-card">
+        <div class="card__header">
+          <span class="card__author">{{ comment.user.username }}</span>
+          <time class="card__timestamp" datetime="{{ comment.time_created|date:'c' }}">
+            {{ comment.time_created|date:"H:i, d M Y" }}
+          </time>
+        </div>
+        <div class="card__body">
+          <p>{{ comment.body }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <p>Aucun commentaire</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+      <a href="{% url 'reviews:comment_create' review.pk %}"
+         class="btn btn--primary">
+        Ajouter un commentaire
+      </a>
+    {% else %}
+      <p>
+        <a href="{% url 'accounts:login' %}">Connectez-vous</a>
+        pour ajouter un commentaire.
+      </p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

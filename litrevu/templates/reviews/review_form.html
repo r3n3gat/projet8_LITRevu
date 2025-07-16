@@ -1,0 +1,74 @@
+{# templates/reviews/review_form.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Créer une critique — LITReview{% endblock %}
+
+{% block content %}
+<div class="form-page container" role="main" aria-labelledby="form-title">
+  <h2 id="form-title">Créer une critique et son ticket</h2>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>1. Livre / Article</legend>
+
+      <div class="form-group">
+        <label for="{{ ticket_form.title.id_for_label }}">Titre :</label>
+        {{ ticket_form.title }}
+        {% for err in ticket_form.title.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ ticket_form.description.id_for_label }}">Description :</label>
+        {{ ticket_form.description }}
+        {% for err in ticket_form.description.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ ticket_form.cover_image.id_for_label }}">Image :</label>
+        {{ ticket_form.cover_image }}
+        {% for err in ticket_form.cover_image.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <fieldset style="margin-top:2rem;">
+      <legend>2. Critique</legend>
+
+      <div class="form-group">
+        <label>Note :</label>
+        {{ form.rating }}
+        {% for err in form.rating.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.headline.id_for_label }}">Titre :</label>
+        {{ form.headline }}
+        {% for err in form.headline.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.body.id_for_label }}">Commentaire :</label>
+        {{ form.body }}
+        {% for err in form.body.errors %}
+          <p class="form-error">{{ err }}</p>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <div class="form-actions" style="margin-top:1.5rem;">
+      <button type="submit" class="btn btn--primary">Publier</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
