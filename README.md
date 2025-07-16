@@ -12,7 +12,7 @@ LITRevu est un MVP de plateforme de demande et publication de critiques de livre
 
 1. **Cloner le dépôt**
    ```bash
-   git clone <URL_DU_DEPOT_GITHUB>
+   git clone <https://github.com/r3n3gat/projet8_LITRevu>
    cd projet8_LITRevu/litrevu
     ```
 
@@ -86,16 +86,20 @@ python manage.py test
 projet8_LITRevu/
 ├── docs/                  # wireframes, cahier des charges…
 ├── env/                   # venv (ignoré par .gitignore)
-├── litrevu/               # projet Django
-│   ├── accounts/          # app auth
-│   ├── core/              # app UI statique
-│   ├── reviews/           # app Tickets & Reviews
-│   └── manage.py
+├── litrevu/               # dossier racine du projet Django
+│   ├── accounts/          # app gestion de l’authentification et profils
+│   ├── core/              # app pages statiques (home, about…)
+│   └── litrevu            # package racine du projet 
+│   ├── reviews/           # app Tickets & Reviews (fonctionnalités principales)
+│   └── scripts/           # scripts utilitaires (ex. nettoyage de fixtures)
+│   └── static             # fichiers statiques communs (CSS, images…)
+│   └── templates          # templates globaux (layout, includes partagés)
+│   └── manage.py          # point d’entrée CLI Django
 ├── fixtures/              # (facultatif) jeux de données
 ├── db.sqlite3             # base SQLite avec données de test
-├── README.md
-├── requirements.txt
-└── .gitignore
+├── README.md              # ce fichier de documentation
+├── requirements.txt       # liste des dépendances pip
+└── .gitignore             # fichiers/dossiers ignorés par Git
 
    ```
 
